@@ -1,8 +1,10 @@
-FROM golang:1.21.3-bullseye
+FROM golang:1.21.3-bullseye as builder
 ARG OAPI_CODEGEN_VERSION
 ENV CGO_ENABLED=0
 ENV GO111MODULE=on
 
 RUN go install github.com/deepmap/oapi-codegen/v2/cmd/oapi-codegen@${OAPI_CODEGEN_VERSION}
 
-ENTRYPOINT ["oapi-codegen"]
+FROM scratch
+COPY --from=builder /go/bin/oapi-codegen /usr/bin/
+ENTRYPOINT ["/usr/bin/oapi-codegen"]

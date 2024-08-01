@@ -1,4 +1,4 @@
-FROM golang:1.21.3-bullseye as builder
+FROM golang:1.21.3-bullseye AS builder
 ARG OAPI_CODEGEN_VERSION
 ENV CGO_ENABLED=0
 ENV GO111MODULE=on
